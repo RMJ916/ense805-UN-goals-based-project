@@ -7,9 +7,9 @@ Instructor - Dr. Timothy Maciag
 
 # Notes:
 High-level guidelines:
-# Mobile Health Care Website
+# Mobile Health Care Application
 * Design approach and architecture:  Domain-driven design
 * License: CC BY-SA 4.0
-*	Technology/Programming environment: WordPress
+*	Technology/Programming environment: Flutter, Dart
 *	Process: Agile Development
 *	Project management software: GitHub
