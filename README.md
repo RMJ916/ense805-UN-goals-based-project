@@ -8,7 +8,7 @@ Instructor - Dr. Timothy Maciag
 # Notes:
 High-level guidelines:
 # Mobile Health Care Application
-* Design approach and architecture:  Domain-driven design
+* Design approach and architecture:  Model–view–controller
 * License: CC BY-SA 4.0
 *	Technology/Programming environment: Flutter, Dart
 *	Process: Agile Development
