@@ -7,6 +7,10 @@ Instructor - Dr. Timothy Maciag
 
 # Notes:
 High-level guidelines:
+
+Activity1 Done..
+Activity2 in Progress..
+
 # Mobile Health Care Application
 * Design approach and architecture:  Model–view–controller
 * License: CC BY-SA 4.0
