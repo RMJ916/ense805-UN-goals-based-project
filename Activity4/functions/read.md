@@ -1,1 +1,1 @@
-
+# This file upload on FCM (Firebase Cloud Messaging). To provide solution for my notification for Android at no cost. i prepared this file and upload in server so i can create notification feature for user when they get new posts or events.
