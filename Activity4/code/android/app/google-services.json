@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "520003247157",
+    "project_id": "mental-health-care-rj",
+    "storage_bucket": "mental-health-care-rj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520003247157:android:12f80c6308c722d046257c",
+        "android_client_info": {
+          "package_name": "tech.flutter.mhcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520003247157-qqost3068s45p3bn059lfo8kapb141st.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ_4SQ6QOOjdZvmExjoUyRMlpBtG_XsT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520003247157-qqost3068s45p3bn059lfo8kapb141st.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
