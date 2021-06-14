@@ -101,7 +101,10 @@ class _EventTileState extends State<EventTile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  
+                  // Icon(Icons.event),
+                  // SizedBox(
+                  //   width: subMargin,
+                  // ),
                   Flexible(
                     child: Text(
                       widget.name,

@@ -87,7 +87,19 @@ class _DashboardState extends State<Dashboard> {
         key: UserProvider.scaffoldKey,
         body: getBody(),
         bottomNavigationBar: getFooter(),
-        
+        // floatingActionButton: FloatingActionButton(
+        //     onPressed: () {
+        //       selectedTab(4);
+        //     },
+        //     child: Icon(
+        //       Icons.add,
+        //       size: 25,
+        //     ),
+        //     backgroundColor: primary
+        //     //params
+        //     ),
+        // floatingActionButtonLocation:
+        //     FloatingActionButtonLocation.centerDocked
       );
     });
   }

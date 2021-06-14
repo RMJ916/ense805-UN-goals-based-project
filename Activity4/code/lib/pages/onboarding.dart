@@ -65,7 +65,30 @@ class _OnboardingState1 extends State<Onboarding> {
         backgroundColor: transparent,
         elevation: 0,
         brightness: Brightness.light,
-        
+        /*actions: [
+          page == 2
+              ? SizedBox.shrink()
+              : Padding(
+                  padding: EdgeInsets.only(right: 30, top: 12),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        page = 2;
+                        pageController.animateToPage(2,
+                            duration: Duration(milliseconds: 700),
+                            curve: Curves.easeInOut);
+                      });
+                    },
+                    child: Text(
+                      "Skip",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                )
+        ],*/
       ),
       body: Container(
         height: h,
@@ -89,7 +112,8 @@ class _OnboardingState1 extends State<Onboarding> {
                         Container(
                           child: Center(
                             child: Center(
-                             
+                              // Hero(
+                              //   tag: "images",
                               child: Image.asset(
                                 "assets/welcome.png",
                                 fit: BoxFit.fitWidth,
@@ -196,7 +220,14 @@ class _OnboardingState1 extends State<Onboarding> {
                                   (route) => false);
                             });
 
-                            
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => Onboarding()));
+                            // pageController.animateToPage(
+                            //     pageController.page.toInt() + 1,
+                            //     duration: Duration(milliseconds: 800),
+                            //     curve: Curves.easeInOut);
                           }
                         },
                         width: w,

@@ -54,7 +54,9 @@ class _SignupState extends State<Signup> {
 
   void signup(BuildContext context) async {
     try {
-     
+      // UserCredential userCredential = await FirebaseAuth.instance
+      //     .createUserWithEmailAndPassword(
+      //         email: email.text, password: pass.text);
       FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: email.text, password: pass.text)
@@ -169,7 +171,11 @@ class _SignupState extends State<Signup> {
         brightness: Brightness.light,
         backgroundColor: white,
         elevation: 0,
-        
+        // title: Text(
+        //   "Create an Account",
+        //   style: TextStyle(
+        //       color: primary, fontWeight: FontWeight.bold, fontSize: 30),
+        // ),
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
@@ -211,7 +217,10 @@ class _SignupState extends State<Signup> {
                     error: fname_erorr,
                     errorText: "",
                     readonly: isloading,
-                   
+                    // inuptformat: [
+                    //   new WhitelistingTextInputFormatter(RegExp("[a-zA-Z]")),
+                    //   BlacklistingTextInputFormatter(new RegExp('[\\ ]')),
+                    // ],
                     labelText: "First Name",
                     obscureText: false,
                     ispassword: false,
@@ -230,7 +239,10 @@ class _SignupState extends State<Signup> {
                     error: lname_error,
                     errorText: "",
                     readonly: isloading,
-                   
+                    // inuptformat: [
+                    //   new WhitelistingTextInputFormatter(RegExp("[a-zA-Z]")),
+                    //   BlacklistingTextInputFormatter(new RegExp('[\\ ]')),
+                    // ],
                     labelText: "Last Name",
                     obscureText: false,
                     ispassword: false,

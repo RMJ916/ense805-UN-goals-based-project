@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:mhcare/models/broadcastRoom.dart';
 import 'package:mhcare/providers/BordcastProvider.dart';
@@ -38,7 +36,16 @@ class _DailyPageState extends State<DailyPage> {
             style: TextStyle(
                 fontSize: 20, fontWeight: FontWeight.bold, color: black),
           ),
-          
+          // actions: [
+          //   Padding(
+          //     padding: EdgeInsets.only(right: mainMargin),
+          //     child: IconButton(
+          //       icon: Icon(Icons.search),
+          //       onPressed: () {},
+          //       color: dark,
+          //     ),
+          //   )
+          // ],
         ),
         backgroundColor: white,
         body: Column(
@@ -82,7 +89,11 @@ class _DailyPageState extends State<DailyPage> {
                 ),
               ),
             ),
-           
+            // broom == null
+            //     ? LinearProgressIndicator(
+            //         backgroundColor: white,
+            //       )
+            //     : SizedBox.shrink()
           ],
         ),
       );

@@ -65,7 +65,11 @@ class _BoradcastRoomState extends State<BoradcastRoomWidget> {
             brightness: Brightness.light,
             backgroundColor: white,
             elevation: 0,
-           
+            // title: Text(
+            //   "Create an Account",
+            //   style: TextStyle(
+            //       color: primary, fontWeight: FontWeight.bold, fontSize: 30),
+            // ),
             title: AppTitle(title: widget.br.name),
             leading: IconButton(
               onPressed: () {

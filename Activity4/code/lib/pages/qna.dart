@@ -1,13 +1,26 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mhcare/models/answer.dart';
 import 'package:mhcare/models/appuser.dart';
+import 'package:mhcare/models/question.dart';
+import 'package:mhcare/pages/adResponse.dart';
 import 'package:mhcare/theme/Style.dart';
 import 'package:mhcare/theme/colors.dart';
+import 'package:mhcare/util/uitility.dart';
 import 'package:mhcare/widget/Buttons.dart';
 import 'package:mhcare/widget/answerTile.dart';
 import 'package:mhcare/widget/inputbox.dart';
+import 'package:mhcare/widget/loading.dart';
+import 'package:mhcare/widget/snackbar.dart';
+import 'package:screenshot/screenshot.dart';
 
 class QNA extends StatefulWidget {
+  Question question;
+  String id;
+
+  QNA({this.question, this.id});
   @override
   _QNAState createState() => _QNAState();
 }
@@ -15,273 +28,376 @@ class QNA extends StatefulWidget {
 class _QNAState extends State<QNA> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int activeDay = 3;
-    Appuser user;
-
+  Appuser user;
+  Appuser queuser;
   TextEditingController ans;
-
-  bool isloading = false; 
-
+  ScreenshotController screenshotController = ScreenshotController();
+  Question question;
+  bool isloading = false;
+  Map<String, Answer> ansr;
+  int total_anser = 0;
+  String bestid = '';
   @override
   void initState() {
     ans = TextEditingController();
-  
+    if (widget.question != null) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.question.qusby)
+          .get()
+          .then((value) {
+        setState(() {
+          queuser = Appuser.fromJson(value.data());
+        });
+      });
+    }
+    loadAns();
     super.initState();
   }
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: white,
-      appBar: AppBar(
-        brightness: Brightness.light,
-        backgroundColor: white,
-        elevation: 0,
-        
-        title: AppTitle(title: "Discussion"),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: black,
-            size: mainMargin + 6,
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: mainMargin),
-            child: IconButton(
-              icon: Icon(Icons.share),
-              onPressed: () {},
-              color: dark,
-            ),
-          )
-        ],
-      ),
-      body: Container(
-        color: grey,
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(mainMargin),
-              decoration: BoxDecoration(
-                  color: white,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(subMargin),
-                      bottomRight: Radius.circular(subMargin))),
-              child: Column(
-                children: [
-                  ListTile(
-                    dense: true,
-                    leading: Container(
-                      width: 50,
-                      decoration: BoxDecoration(
-                          color: primary,
-                          borderRadius: BorderRadius.circular(25)),
-                      child: Center(
-                        child: Text(
-                          "RG",
-                          style: TextStyle(
-                              color: white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                    title: Text("Reema Jiyani"),
-                    subtitle: Text("12/05/21 12:37 AM PST"),
-                  ),
-                  ListTile(
-                    title: Text('What causes depression?'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: subMargin),
-                          child: Text(
-                            'We all have days when we feel down, but those feelings usually pass without having too much impact on our lives. But if they last beyond a couple of weeks or you feel as though things are getting worse, it could be a sign that you’re experiencing depression.',
-                            style: eventsubtitle,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: subMargin),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  addresponse();
-                                },
-                                child: Container(
-                                  width: 155,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(7),
-                                      color: grey),
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.comment,
-                                          size: 16,
-                                          color: dark,
-                                        ),
-                                        SizedBox(
-                                          width: subMargin,
-                                        ),
-                                        Text(
-                                          "Add Response ",
-                                          style: TextStyle(color: dark),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Text("2 Responses")
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(mainMargin),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: grey.withOpacity(0.01),
-                          spreadRadius: 10,
-                          blurRadius: 3,
-                          // changes position of shadow
-                        ),
-                      ]),
-                  child: ListView.separated(
-                      padding: EdgeInsets.symmetric(vertical: subMargin),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return AnswerTile(
-                          name: "Mayank G",
-                          answer: "Just relax and take long breath!",
-                          answerby_admin: index.isEven ? true : false,
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return SizedBox(
-                          height: 0,
-                        );
-                      },
-                      itemCount: 2),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+
+  loadAns() async {
+    if (widget.question != null) {
+      FirebaseFirestore.instance
+          .collection('questions')
+          .doc(widget.id)
+          .collection('ans')
+          .orderBy('timestamp', descending: true)
+          .snapshots()
+          .listen((value) {
+        setState(() {
+          ansr = {};
+        });
+        value.docs.forEach((element) {
+          setState(() {
+            ansr.putIfAbsent(element.id, () => Answer.fromJson(element.data()));
+          });
+        });
+      });
+    }
   }
 
-  void addresponse() {
-    showModalBottomSheet<void>(
-      enableDrag: true,
-      isScrollControlled: true,
-      context: context,
-      backgroundColor: white,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(subMargin)),
-      builder: (BuildContext context) {
-        return Container(
-          height: 350,
-          color: Colors.transparent,
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(mainMargin),
-                topRight: Radius.circular(mainMargin)),
-            child: Container(
-              height: 350,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(mainMargin),
-                      topRight: Radius.circular(mainMargin)),
-                  color: white),
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    AppBar(
-                      title: AppTitle(title: "Add Response"),
-                      actions: [
-                        Padding(
-                          padding: EdgeInsets.only(right: subMargin - 6),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.close,
-                              color: dark,
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                      ],
-                      automaticallyImplyLeading: false,
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              left: mainMargin,
-                              bottom: mainMargin,
-                              right: mainMargin),
-                          child: inputBox(
-                            controller: ans,
-                            error: false,
-                            errorText: "",
-                            inuptformat: [],
-                            labelText: "Question",
-                            obscureText: false,
-                            ispassword: false,
-                            istextarea: true,
-                            readonly: false,
-                            minLine: 7,
-                            onchanged: (value) {},
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: mainMargin),
-                      child: PrimaryButton(
-                        isloading: false,
-                        title: "Post",
-                        backgroundColor: primary,
-                        foregroundColor: white,
-                        borderRadius: buttonRadius,
-                        onPressed: () {},
-                        height: buttonHeight,
-                        width:
-                            MediaQuery.of(context).size.width - 2 * mainMargin,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+  @override
+  Widget build(BuildContext context) {
+    return Screenshot(
+      controller: screenshotController,
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: white,
+        appBar: AppBar(
+          brightness: Brightness.light,
+          backgroundColor: white,
+          elevation: 0,
+          // title: Text(
+          //   "Create an Account",
+          //   style: TextStyle(
+          //       color: primary, fontWeight: FontWeight.bold, fontSize: 30),
+          // ),
+          title: AppTitle(title: "Discussion"),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(
+              Icons.arrow_back,
+              color: black,
+              size: mainMargin + 6,
             ),
           ),
-        );
-      },
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: mainMargin),
+              child: IconButton(
+                icon: Icon(Icons.share),
+                onPressed: () {
+                  shareImage1(
+                      controller: screenshotController,
+                      msg: widget.question.qus);
+                },
+                color: dark,
+              ),
+            )
+          ],
+        ),
+        body: Container(
+          color: grey,
+          child: Column(
+            children: [
+              queuser == null
+                  ? Container(
+                      height: 150,
+                      decoration: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(subMargin),
+                              bottomRight: Radius.circular(subMargin))),
+                      child: Center(child: progressBar()))
+                  : Container(
+                      padding: EdgeInsets.all(mainMargin),
+                      decoration: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(subMargin),
+                              bottomRight: Radius.circular(subMargin))),
+                      child: Column(
+                        children: [
+                          ListTile(
+                            dense: true,
+                            leading: Container(
+                              width: 50,
+                              decoration: BoxDecoration(
+                                  color: primary,
+                                  borderRadius: BorderRadius.circular(25)),
+                              child: Center(
+                                child: Text(
+                                  (queuser.fname.substring(0, 1) +
+                                          queuser.lname.substring(0, 1))
+                                      .toUpperCase(),
+                                  style: TextStyle(
+                                      color: white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ),
+                            title: Text(queuser.fname + " " + queuser.lname),
+                            subtitle: Text(widget.question.timestamp
+                                    .toDate()
+                                    .toLocal()
+                                    .toString()
+                                    .substring(0, 16) +
+                                " " +
+                                widget.question.timestamp
+                                    .toDate()
+                                    .timeZoneName
+                                    .toString()),
+                          ),
+                          ListTile(
+                            title: Text(widget.question.qus),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                widget.question.bestanswer == ''
+                                    ? SizedBox.shrink()
+                                    : Padding(
+                                        padding:
+                                            EdgeInsets.only(top: subMargin),
+                                        child: Text(
+                                          widget.question.bestanswer,
+                                          style: eventsubtitle,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: subMargin),
+                                  child: Row(
+                                    mainAxisAlignment: (bestid != "" ||
+                                            widget.question.best_ans_id != "")
+                                        ? MainAxisAlignment.start
+                                        : MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      (bestid != "" ||
+                                              widget.question.best_ans_id != "")
+                                          ? SizedBox.shrink()
+                                          : InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            AddResponse(
+                                                                tans:
+                                                                    ansr.length,
+                                                                id: widget
+                                                                    .id))).then(
+                                                    (value) {
+                                                  if (value == 'true') {
+                                                    CustomSnackBar(
+                                                            actionTile: "Close",
+                                                            scaffoldKey:
+                                                                scaffoldKey,
+                                                            haserror: false,
+                                                            isfloating: true,
+                                                            onPressed: () {},
+                                                            title:
+                                                                // "Something went wrong ,Try again later!"
+                                                                "Answer added!")
+                                                        .show();
+                                                  }
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 155,
+                                                height: 30,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            7),
+                                                    color: grey),
+                                                child: Center(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.comment,
+                                                        size: 16,
+                                                        color: dark,
+                                                      ),
+                                                      SizedBox(
+                                                        width: subMargin,
+                                                      ),
+                                                      Text(
+                                                        "Add Response ",
+                                                        style: TextStyle(
+                                                            color: dark),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                      Text(ansr == null
+                                          ? 0.toString()
+                                          : ansr.length.toString() +
+                                              " Responses")
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                            //   trailing: Column(
+                            //     mainAxisAlignment: MainAxisAlignment.center,
+                            //     children: [
+                            //       Icon(answered?Icons.check_circle_outline:Icons.arrow_right,size: answered?24:30,
+                            //       color:answered?primary: dark,
+                            //       // trailing: SizedBox(
+                            //       //   child: Container(
+                            //       //     width: unread.length == 1 ? 20 : (unread.length * 13.0),
+                            //       //     height: 20,
+                            //       //     decoration: BoxDecoration(
+                            //       //         borderRadius: BorderRadius.circular(10), color: primary),
+                            //       //     child: Center(
+                            //       //         child: Text(
+                            //       //       unread,
+                            //       //       style: TextStyle(color: white),
+                            //       //     )),
+                            //       //   ),
+                            //       // ),
+                            // ),
+                            //     ],
+                            //   ),
+                          ),
+                        ],
+                      ),
+                    ),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(mainMargin),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: grey.withOpacity(0.01),
+                            spreadRadius: 10,
+                            blurRadius: 3,
+                            // changes position of shadow
+                          ),
+                        ]),
+                    child: ansr == null
+                        ? Loading(
+                            title: "loading!",
+                          )
+                        : ansr.length == 0
+                            ? NoData(
+                                title: "No Answers from users!",
+                              )
+                            : ListView.separated(
+                                padding:
+                                    EdgeInsets.symmetric(vertical: subMargin),
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onLongPress: () {
+                                      if (FirebaseAuth
+                                              .instance.currentUser.uid ==
+                                          widget.question.qusby) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Confirm"),
+                                              actionsPadding: EdgeInsets.only(
+                                                  right: subMargin,
+                                                  bottom: subMargin),
+                                              content: Text(
+                                                  "Do you want to choose this answer as a best answer and close this question!"),
+                                              actions: [
+                                                PrimaryButton(
+                                                  isloading: false,
+                                                  title: "Sure",
+                                                  backgroundColor: primary,
+                                                  height: 40,
+                                                  foregroundColor: white,
+                                                  width: 120,
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      bestid = ansr.keys
+                                                          .toList()[index];
+                                                    });
+                                                    FirebaseFirestore.instance
+                                                        .collection('questions')
+                                                        .doc(widget.id)
+                                                        .set(
+                                                            {
+                                                          "answered": true,
+                                                          "bestanswer": ansr
+                                                              .values
+                                                              .toList()[index]
+                                                              .answers,
+                                                          "best_ans_id": ansr
+                                                              .keys
+                                                              .toList()[index]
+                                                        },
+                                                            SetOptions(
+                                                                merge:
+                                                                    true)).then(
+                                                            (value) {
+                                                      Navigator.pop(
+                                                          context, "true");
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }
+                                    },
+                                    child: AnswerTile(
+                                        ans: ansr.values.toList()[index],
+                                        bestid: bestid == ''
+                                            ? widget.question.best_ans_id
+                                            : bestid,
+                                        id: ansr.keys.toList()[index]),
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return SizedBox(
+                                    height: 0,
+                                  );
+                                },
+                                itemCount: ansr.length),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

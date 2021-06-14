@@ -35,19 +35,28 @@ class _PastEventState extends State<PastEvent> {
   loadfirst10() async {
     FirebaseFirestore.instance
         .collection('events')
-        .where('event_date', isGreaterThan: Timestamp.now())
+        .where('event_date', isLessThanOrEqualTo: Timestamp.now())
         .orderBy('event_date')
         .limit(10)
         .get()
         .then((value) {
-      pastevents = {};
+          setState(() {
+                 pastevents = {};
+          });
+ 
       value.docs.forEach((element) {
         setState(() {
           pastevents.putIfAbsent(
               element.id, () => Event.fromJson(element.data()));
         });
       });
-      lastdocid = value.docs.last;
+    if (value.docs.length > 0) {
+               lastdocid = value.docs.last;
+        } else {
+          print("upto date");
+        }
+   
+   
     });
   }
 
@@ -56,7 +65,7 @@ class _PastEventState extends State<PastEvent> {
       print('loading more 10');
       FirebaseFirestore.instance
           .collection('events')
-          .where('event_date', isGreaterThan: Timestamp.now())
+          .where('event_date', isLessThanOrEqualTo: Timestamp.now())
           .orderBy('event_date')
           .startAfterDocument(lastdocid)
           .limit(10)
@@ -92,7 +101,12 @@ class _PastEventState extends State<PastEvent> {
         backgroundColor: grey,
         appBar: AppBar(
           title: AppTitle(title: "Past Event"),
-          
+          //             bottom:  TabBar(
+          //   tabs: [
+          //     Tab( text: "Posts",),
+          //     Tab( text: "Events",),
+          //   ]
+          // ),
         ),
         body: Container(
           decoration: BoxDecoration(

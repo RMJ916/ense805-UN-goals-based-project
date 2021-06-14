@@ -40,7 +40,16 @@ class _EventsState extends State<Events> {
             style: TextStyle(
                 fontSize: 20, fontWeight: FontWeight.bold, color: black),
           ),
-          
+          // actions: [
+          //   Padding(
+          //     padding:   EdgeInsets.only(right: mainMargin),
+          //     child: IconButton(
+          //       icon: Icon(Icons.search),
+          //       onPressed: () {},
+          //       color: dark,
+          //     ),
+          //   )
+          // ],
         ),
         backgroundColor: white,
         body: Container(
@@ -55,9 +64,10 @@ class _EventsState extends State<Events> {
                   title: "Wait, Event is loading!",
                 )
               : ListView(
+                physics: AlwaysScrollableScrollPhysics(),
                   children: [
-                    HideOverGlow(
-                      child: RefreshIndicator(
+                
+                    RefreshIndicator(
                         onRefresh: () async {},
                         child: events.length == 0
                             ? NoData(
@@ -76,6 +86,7 @@ class _EventsState extends State<Events> {
                                 child: ListView.separated(
                                   itemCount: event.length,
                                   shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     return EventTile(
                                         image_url: event[index].image,
@@ -99,7 +110,7 @@ class _EventsState extends State<Events> {
                                 ),
                               ),
                       ),
-                    ),
+                  
                     Padding(
                       padding: EdgeInsets.only(top: mainMargin),
                       child: Container(

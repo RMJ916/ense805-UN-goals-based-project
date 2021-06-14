@@ -50,9 +50,8 @@ class BroadcastPost extends StatelessWidget {
                       padding: EdgeInsets.only(
                           left: subMargin, top: subMargin, right: subMargin),
                       child: CachedNetworkImage(
-                        imageUrl:
-                            'https://www.biospectrumasia.com/uploads/articles/mental_health_awareness_concept_23_2148514643-17096.jpg',
-                        width: double.infinity,
+                               imageUrl:
+                           post.images[0],  width: double.infinity,
                         height: 160,
                         fit: BoxFit.cover,
                         errorWidget: (context, url, error) => Container(
@@ -62,7 +61,16 @@ class BroadcastPost extends StatelessWidget {
                           child: Center(child: Icon(Icons.image)),
                         ),
                         placeholder: (context, value) {
-                          
+                          // return Center(
+                          //   child: Container(
+                          //     width: 46,
+                          //     height: 46,
+                          //     child: CircularProgressIndicator(
+                          //       valueColor: new AlwaysStoppedAnimation<Color>(dark),
+                          //       backgroundColor: grey,
+                          //     ),
+                          //   ),
+                          // );
                           return Container(
                             width: double.infinity,
                             height: 160,
@@ -91,12 +99,23 @@ class BroadcastPost extends StatelessWidget {
                               children: [
                                 Text(
                                   post.title,
-                                  
+                                  // style: FlutterFlowTheme.bodyText1.override(
+                                  //   fontFamily: 'Poppins',
+                                  //   fontSize: 15,
+                                  //   fontWeight: FontWeight.w600,
+                                  // ),
                                 ),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    
+                                    //     Text(
+                                    // "      getCurrentTimestamp.toString(),",
+                                    //       // style:
+                                    //       //     FlutterFlowTheme.bodyText1.override(
+                                    //       //   fontFamily: 'Poppins',
+                                    //       //   color: FlutterFlowTheme.secondaryColor,
+                                    //       // ),
+                                    //     )
                                   ],
                                 )
                               ],

@@ -32,7 +32,11 @@ class _EventDetailsState extends State<EventDetails> {
           brightness: Brightness.light,
           backgroundColor: white,
           elevation: 0,
-         
+          // title: Text(
+          //   "Create an Account",
+          //   style: TextStyle(
+          //       color: primary, fontWeight: FontWeight.bold, fontSize: 30),
+          // ),
           title: AppTitle(title: event.title),
           leading: IconButton(
             onPressed: () {
@@ -106,7 +110,16 @@ class _EventDetailsState extends State<EventDetails> {
                           child: Center(child: Icon(Icons.image)),
                         ),
                         placeholder: (context, value) {
-                          
+                          // return Center(
+                          //   child: Container(
+                          //     width: 46,
+                          //     height: 46,
+                          //     child: CircularProgressIndicator(
+                          //       valueColor: new AlwaysStoppedAnimation<Color>(dark),
+                          //       backgroundColor: grey,
+                          //     ),
+                          //   ),
+                          // );
                           return Container(
                             width: double.infinity,
                             height: 160,

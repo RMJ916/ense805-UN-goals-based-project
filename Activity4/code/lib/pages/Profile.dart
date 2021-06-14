@@ -48,7 +48,10 @@ class _ProfilePageState extends State<ProfilePage> {
         city.text = user.city;
         state.text = user.state;
         country.text = user.country;
-        
+        // dateOfBirth.text = DateTime.fromMillisecondsSinceEpoch(
+        //         user.birthdate.millisecondsSinceEpoch)
+        //     .toString()
+        //     .substring(0, 10);
       }
       return user == null
           ? CircularProgressIndicator.adaptive()
@@ -162,7 +165,16 @@ await UserProvider.refreshAuthdata();
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        
+                                        // Text(
+                                        //   user.fname+" "+user.lname,
+                                        //   style: TextStyle(
+                                        //       fontWeight: FontWeight.w500,
+                                        //       fontSize: 12,
+                                        //       color: white),
+                                        // ),
+                                        // SizedBox(
+                                        //   height: 10,
+                                        // ),
                                         Text(
                                           user.fname + " " + user.lname,
                                           style: TextStyle(
@@ -213,11 +225,16 @@ await UserProvider.refreshAuthdata();
                                                     isfloating: true,
                                                     onPressed: () {},
                                                     title:
-                                                        "Something went wrong ,Try again later!")
+                                                        // "Something went wrong ,Try again later!"
+                                                       " Your Profile has been updated successfully!"
+                                                        )
                                                 .show();
                                           }
                                         });
-                                       
+                                        // if (!FirebaseAuth.instance.currentUser
+                                        //     .emailVerified) {
+                                        //   UserProvider.sendVerificationemail();
+                                        // }
                                       },
                                       child: Container(
                                         width: 70,

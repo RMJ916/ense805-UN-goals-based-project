@@ -63,7 +63,12 @@ class _SplashScreenState extends State<SplashScreen>
       builder: (context, widget) {
         return Scaffold(
           backgroundColor: white,
-         
+          // appBar: AppBar(
+          //     backgroundColor: transperentColor,
+          //     elevation: 0,
+          //     brightness: Brightness.dark),
+          // extendBodyBehindAppBar: true,
+//
           body: Stack(children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -77,7 +82,19 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
               ],
             ),
-           
+            // Align(
+            //   alignment: Alignment.center,
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(top: 200.0),
+            //     child: Text(
+            //       "BreathSense",
+            //       style: TextStyle(
+            //           color: white,
+            //           fontSize: 36.0,
+            //           fontWeight: FontWeight.w300),
+            //     ),
+            //   ),
+            // )
           ]),
         );
       },

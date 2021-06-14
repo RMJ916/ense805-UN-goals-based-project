@@ -62,7 +62,9 @@ class _SteponeState extends State<Stepone> {
                             foregroundColor: white,
                           ),
                         ),
-                        
+                        // SizedBox(
+                        //   height: 8 * subMargin,
+                        // ),
                       ],
                     ),
                   ),
@@ -75,7 +77,37 @@ class _SteponeState extends State<Stepone> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                   
+                    // Text(
+                    //   "Fitness.",
+                    //   style: TextStyle(
+                    //       color: black,
+                    //       fontWeight: FontWeight.bold,
+                    //       fontSize: 40),
+                    // ),
+                    // Text(
+                    //   "With Friends",
+                    //   style: TextStyle(
+                    //     color: primaryDark,
+                    //     fontWeight: FontWeight.w400,
+                    //     fontSize: 40,
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 2 * subMargin,
+                    // ),
+                    // PrimaryButton(
+                    //   isloading: false,
+                    //   onPressed: () {
+                    //     Navigator.push(context,
+                    //         MaterialPageRoute(builder: (context) => SignIn()));
+                    //   },
+                    //   title: "Login",
+                    //   backgroundColor: primary,
+                    //   foregroundColor: white,
+                    // ),
+                    // SizedBox(
+                    //   height: 8 * subMargin,
+                    // ),
                     Center(
                       child: InkWell(
                         onTap: () {

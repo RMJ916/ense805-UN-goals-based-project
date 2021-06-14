@@ -71,7 +71,9 @@ if(w>120)
 
   void ForgotPass(BuildContext context) async {
     try {
-    
+    //  UserCredential userCredential = await FirebaseAuth.instance
+     //     .signInWithEmailAndPassword(email: email.text, password: pass.text);
+     // print("login");
 
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email.text);
 
@@ -95,7 +97,14 @@ if(w>120)
       isloading=false;
     });
 
-      
+      // Provider.of<UserProvider>(context, listen: false).fetchLogedUser();
+
+      //   Provider.of<ActivitieProvider>(context, listen: false)
+      //   .getActivitiesFromFirebase();
+
+      // Navigator.of(context).pushAndRemoveUntil(
+      //   MaterialPageRoute(builder: (context) => DashBoard()),
+      //  (route) => false);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email') {
         setState(() {

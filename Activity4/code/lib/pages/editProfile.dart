@@ -94,7 +94,11 @@ class _EditProfileState extends State<EditProfile> {
       city.text = user.city;
       state.text = user.state;
       country.text = user.country;
-      
+      // dateOfBirth.text = DateTime.fromMillisecondsSinceEpoch(
+      //         user.birthdate.millisecondsSinceEpoch)
+      //     .toString()
+      //     .substring(0, 10);
+
       date = user.birthdate.toDate();
     }
     super.initState();
@@ -110,7 +114,11 @@ class _EditProfileState extends State<EditProfile> {
           brightness: Brightness.light,
           backgroundColor: white,
           elevation: 0,
-          
+          // title: Text(
+          //   "Create an Account",
+          //   style: TextStyle(
+          //       color: primary, fontWeight: FontWeight.bold, fontSize: 30),
+          // ),
           title: AppTitle(title: "Edit Profile"),
           leading: IconButton(
             onPressed: () {
@@ -132,7 +140,7 @@ class _EditProfileState extends State<EditProfile> {
                   child: NotificationListener<OverscrollIndicatorNotification>(
                 onNotification: (overscroll) {
                   if (overscroll.leading) {
-                   
+                    // loadmore();
                     overscroll.disallowGlow();
                   } else {
                     overscroll.disallowGlow();
@@ -148,7 +156,10 @@ class _EditProfileState extends State<EditProfile> {
                       error: fname_erorr,
                       errorText: "",
                       readonly: isloading,
-                      
+                      // inuptformat: [
+                      //   new WhitelistingTextInputFormatter(RegExp("[a-zA-Z]")),
+                      //   BlacklistingTextInputFormatter(new RegExp('[\\ ]')),
+                      // ],
                       labelText: "First Name",
                       obscureText: false,
                       ispassword: false,
@@ -167,7 +178,10 @@ class _EditProfileState extends State<EditProfile> {
                       error: lname_error,
                       errorText: "",
                       readonly: isloading,
-                      
+                      // inuptformat: [
+                      //   new WhitelistingTextInputFormatter(RegExp("[a-zA-Z]")),
+                      //   BlacklistingTextInputFormatter(new RegExp('[\\ ]')),
+                      // ],
                       labelText: "Last Name",
                       obscureText: false,
                       ispassword: false,

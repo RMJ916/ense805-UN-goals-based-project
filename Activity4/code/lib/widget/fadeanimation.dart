@@ -23,7 +23,11 @@ class _FadeAnimationState extends State<FadeAnimation> with SingleTickerProvider
     controller.forward().whenComplete(() {
       // controller.reverse();
     });
-    
+    // Future.delayed(Duration(seconds: 2)).then((value) {
+    //   Navigator.of(context).pushAndRemoveUntil(
+    //       MaterialPageRoute(builder: (context) => Onboarding()),
+    //       (route) => false);
+    // });
   }
 
   @override

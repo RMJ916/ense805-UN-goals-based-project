@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mhcare/providers/BordcastProvider.dart';
 import 'package:mhcare/providers/EventProvider.dart';
+import 'package:mhcare/providers/QueProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:mhcare/pages/Splash.dart';
 import 'package:mhcare/providers/UserProvider.dart';
@@ -69,6 +70,8 @@ class MyApp extends StatelessWidget {
         ),
           ChangeNotifierProvider(
           create: (context) => EventProvider  (),
+        ),     ChangeNotifierProvider(
+          create: (context) => QusProivder  (),
         ),
       ],
       child: MaterialApp(

@@ -26,6 +26,14 @@ class BroadcastProvider extends ChangeNotifier {
     loadbroadcastroom();
   }
 
+  // loadunseenmsg() {
+  //   getLastDocid().then((value) {
+  //     if (value == "nodoc") {
+  //       Stream bstream =
+  //           FirebaseFirestore.instance.collection("broadcastrooms").orderBy("field").snapshots();
+  //     } else {}
+  //   });
+  // }
 
   loadbroadcastroom() async {
     await firestore
@@ -81,7 +89,8 @@ class BroadcastProvider extends ChangeNotifier {
             notifyListeners();
           });
 
-    
+          // var u1 = post.values.toList().where(
+          //     (element) => element.postAt.compareTo(user.lastseen[key]) > 0);
 
           try {
             lastdoc[key] = event.docs.last;
@@ -95,7 +104,7 @@ class BroadcastProvider extends ChangeNotifier {
           }catch(e)
           {
 
-            
+
           }
         });
       });
@@ -131,6 +140,7 @@ class BroadcastProvider extends ChangeNotifier {
 
   lastseenupdate({Appuser user, String id}) {
     if (posts[id] == null) return 0;
+        if (user.lastseen[id] == null) return 0;
     var u1 = posts[id]
         .values
         .toList()
