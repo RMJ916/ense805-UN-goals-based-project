@@ -112,7 +112,7 @@ class _AddResponseState extends State<AddResponse> {
                             .collection('questions')
                             .doc(widget.id)
                             .set({
-                          "answered": true,
+                          "answered": false,
                           "total_answer": (widget.tans + 1)
                         }, SetOptions(merge: true)).then((value) {
                           Navigator.pop(context, "true");
