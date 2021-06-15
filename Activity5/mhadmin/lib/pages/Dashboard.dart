@@ -120,6 +120,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int activeDay = 3;
   Map<String, BroadcastRoom> broom;
+  List<String> names = [
+    "Today\'s Excercise",
+    "Today\'s Energizer",
+    "Today\'s Quotes",
+    "Technical Help"
+  ];
   @override
   Widget build(BuildContext context) {
     return Consumer4<UserProvider, BroadcastProvider, EventProvider,
