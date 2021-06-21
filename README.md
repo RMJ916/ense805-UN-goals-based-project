@@ -9,7 +9,10 @@ Instructor - Dr. Timothy Maciag
 High-level guidelines:
 
 * Activity1 Done..
-* Activity2 in Progress..
+* Activity2 Done..
+* Activity3 Done..
+* Activity4 Done..
+* Activity5 Done..
 
 # Mobile Health Care Application
 * Design approach and architecture:  Model–view–controller
